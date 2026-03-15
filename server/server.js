@@ -10,6 +10,10 @@ server.use(cors());
 server.use(express.json());
 server.use(cookieParser());
 
+const authRouter = require('./routes/auth');
+
+server.use("",authRouter);
+
 connectDB()
     .then(()=>{
         console.log("DB connection was establised :D");
