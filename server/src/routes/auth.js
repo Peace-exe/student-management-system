@@ -34,7 +34,7 @@ authRouter.post("/signup", async (req,res)=>{
         delete userObj.password;
         
         res.status(201).json({
-            message:"data saved successfully!!",
+            message:"data saved successfully",
             data:userObj
         });
     }catch(err){
@@ -72,6 +72,11 @@ authRouter.post("/login",
 
                     res.cookie("token",token, {
                         expires:new Date(Date.now()+24*3600000)
+                    });
+
+                    res.status(201).json({
+                        "message":"login successfull",
+                        "data":userData
                     });
                     
                     

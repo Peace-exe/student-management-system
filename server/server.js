@@ -10,7 +10,7 @@ server.use(cors());
 server.use(express.json());
 server.use(cookieParser());
 
-const authRouter = require('./routes/auth');
+const authRouter = require('./src/routes/auth');
 
 server.use("",authRouter);
 
