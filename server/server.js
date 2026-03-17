@@ -1,6 +1,6 @@
 const express = require("express");
 const server = express();
-const connectDB= require("./src/config/database"); //only after requirng this file here you will be able to connect to the db
+const connectDB= require("./src/config/database");
 const cookieParser=require("cookie-parser");
 const cors = require("cors");
 require('dotenv').config();
@@ -16,7 +16,7 @@ server.use("",authRouter);
 
 connectDB()
     .then(()=>{
-        console.log("DB connection was establised :D");
+        console.log("DB connection was establised.");
         server.listen(PORT,()=>{
             console.log(`server is running on port:${PORT}`);
         });
