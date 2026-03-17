@@ -11,8 +11,10 @@ server.use(express.json());
 server.use(cookieParser());
 
 const authRouter = require('./src/routes/auth');
+const studentRouter = require('./src/routes/student');
 
 server.use("",authRouter);
+server.use("",studentRouter);
 
 connectDB()
     .then(()=>{
