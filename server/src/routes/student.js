@@ -121,3 +121,5 @@ studentRouter.delete("/deleteStudent/:rollNum", userAuth,
         }
     }
 );
+
+module.exports = studentRouter;
