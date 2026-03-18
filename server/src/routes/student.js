@@ -70,10 +70,10 @@ studentRouter.get("/getAllStudents", userAuth,
     }
 );
 
-studentRouter.patch("/updateStudent/:rollNum", userAuth,
+studentRouter.post("/updateStudent", userAuth,
     async (req, res) => {
         try {
-            const { rollNum } = req.params;
+            const { rollNum } = req.query;
             const updates = req.body;
 
             const ALLOWED_UPDATES = ["firstName", "lastName", "email", "course"];

@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 const validator= require('validator');
 const bcrypt=require('bcrypt');
 const jwt= require("jsonwebtoken");
-const JWT_PRIVATE_KEY="@DEVTINDER$730";
+const JWT_PRIVATE_KEY="@AbyMTech$730";
 
 const userSchema = new mongoose.Schema({ 
     firstName:{
