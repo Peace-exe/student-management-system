@@ -6,12 +6,12 @@ A backend REST API server for managing student data with authentication built us
 
 ## Tech Stack
 
-- **Node.js** — Runtime environment
-- **Express.js** — Web framework
-- **MongoDB** — Database
-- **Mongoose** — MongoDB ODM
-- **JWT (jsonwebtoken)** — Authentication
-- **bcrypt** — Password hashing
+- **Node.js**: Runtime environment
+- **Express.js**: Web framework
+- **MongoDB**: Database
+- **Mongoose**: MongoDB ODM
+- **JWT (jsonwebtoken)**: Authentication
+- **bcrypt**: Password hashing
 
 ---
 
