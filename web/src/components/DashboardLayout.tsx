@@ -5,15 +5,15 @@ import {
   GraduationCap,
   User,
   LogOut,
-  Search,
   Menu,
   X,
 } from "lucide-react";
+import axios from "axios";
 import useAuthStore from "../store/useAuthStore";
+import useStudentStore from "../store/useStudentStore";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  onLogout: () => void;
 }
 
 const navItems = [
@@ -22,14 +22,28 @@ const navItems = [
   { label: "Account", icon: User, path: "/account" },
 ];
 
-const DashboardLayout = ({ children, onLogout }: DashboardLayoutProps) => {
+const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const user = useAuthStore((state)=>state.user);
+
+  const user = useAuthStore((state) => state.user);
+  const clearUser = useAuthStore((state) => state.clearUser);
+  const clearStudents = useStudentStore((state) => state.clearStudents);
+
+  const handleLogout = async () => {
+    try {
+      await axios.post("http://localhost:7001/logout", {}, { withCredentials: true });
+    } catch {
+      // even if API fails, clear local state anyway
+    } finally {
+      clearUser();
+      clearStudents();
+    }
+  };
+
   return (
     <div className="flex h-screen bg-background text-foreground">
-      {/* Mobile overlay */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-30 bg-foreground/20 lg:hidden"
@@ -37,7 +51,6 @@ const DashboardLayout = ({ children, onLogout }: DashboardLayoutProps) => {
         />
       )}
 
-      {/* Sidebar */}
       <aside
         className={`fixed inset-y-0 left-0 z-40 w-60 border-r border-border bg-background flex flex-col p-4 gap-8 transition-transform lg:static lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -82,7 +95,7 @@ const DashboardLayout = ({ children, onLogout }: DashboardLayoutProps) => {
         </nav>
 
         <button
-          onClick={onLogout}
+          onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <LogOut size={18} />
@@ -90,7 +103,6 @@ const DashboardLayout = ({ children, onLogout }: DashboardLayoutProps) => {
         </button>
       </aside>
 
-      {/* Main */}
       <div className="flex flex-1 flex-col min-w-0 overflow-hidden">
         <header className="flex h-14 items-center gap-4 border-b border-border px-4 lg:px-8">
           <button
@@ -99,7 +111,6 @@ const DashboardLayout = ({ children, onLogout }: DashboardLayoutProps) => {
           >
             <Menu size={20} />
           </button>
-         
         </header>
         <section className="flex-1 overflow-y-auto p-4 lg:p-8">
           <div className="mx-auto max-w-[1400px]">{children}</div>
