@@ -9,6 +9,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import useAuthStore from "../store/useAuthStore";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -25,7 +26,7 @@ const DashboardLayout = ({ children, onLogout }: DashboardLayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const user = useAuthStore((state)=>state.user);
   return (
     <div className="flex h-screen bg-background text-foreground">
       {/* Mobile overlay */}
@@ -47,7 +48,7 @@ const DashboardLayout = ({ children, onLogout }: DashboardLayoutProps) => {
             <div className="flex h-6 w-6 items-center justify-center rounded bg-primary">
               <div className="h-2 w-2 rounded-full bg-primary-foreground" />
             </div>
-            <span className="font-semibold tracking-tight">Faculty</span>
+            <span className="font-semibold tracking-tight">{`${user?.firstName} ${user?.lastName}`}</span>
           </div>
           <button
             className="lg:hidden text-muted-foreground"
@@ -98,14 +99,7 @@ const DashboardLayout = ({ children, onLogout }: DashboardLayoutProps) => {
           >
             <Menu size={20} />
           </button>
-          <div className="flex items-center gap-3 text-muted-foreground flex-1 max-w-sm">
-            <Search size={16} />
-            <input
-              type="text"
-              placeholder="Search students (⌘K)"
-              className="w-full border-none bg-transparent text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-0"
-            />
-          </div>
+         
         </header>
         <section className="flex-1 overflow-y-auto p-4 lg:p-8">
           <div className="mx-auto max-w-[1400px]">{children}</div>

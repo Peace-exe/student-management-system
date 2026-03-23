@@ -1,14 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GraduationCap } from "lucide-react";
 import axios from "axios";
 import { useToast } from "../hooks/use-toast";
 import useAuthStore from "../store/useAuthStore";
 
-interface LoginProps {
-  onLogin?: () => void;
-}
 
-const Login = ({ onLogin }: LoginProps) => {
+
+const Login = () => {
   const [mode, setMode] = useState<"login" | "register">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +22,8 @@ const Login = ({ onLogin }: LoginProps) => {
   const setUser = useAuthStore((state) => state.setUser);
   const { toast } = useToast();
 
+  
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) { setError("Please fill in all fields."); return; }
@@ -31,10 +31,9 @@ const Login = ({ onLogin }: LoginProps) => {
     try {
       setLoading(true);
       setError("");
-      const res = await axios.post("http://localhost:7001/login", { email, password });
-      console.log(res.data);
+      const res = await axios.post("http://localhost:7001/login", { email, password }, { withCredentials: true });
       setUser(res.data.data);
-      onLogin?.();
+      
     } catch (err: any) {
       setError(err.response?.data?.message || "Login failed. Please try again.");
     } finally {
@@ -59,7 +58,7 @@ const Login = ({ onLogin }: LoginProps) => {
         lastName: regLastName,
         email: regEmail,
         password: regPassword,
-      });
+      }, { withCredentials: true });
 
       toast({ title: "Account created", description: "You can now sign in with your credentials." });
       setEmail(regEmail);

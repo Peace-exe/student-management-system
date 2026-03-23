@@ -1,7 +1,7 @@
 const express = require("express");
 const profileRouter = express.Router();
 const {userAuth} = require('../middlewares/auth');
-
+const User = require('../models/user');
 profileRouter.post("/profile/update", userAuth,
     async (req, res) => {
         try {
@@ -38,4 +38,12 @@ profileRouter.post("/profile/update", userAuth,
     }
 );
 
+profileRouter.get("/profile/validateToken",userAuth,
+    (req,res)=>{
+        res.status(200).json({
+            data:req.user
+        })
+
+    }
+)
 module.exports=profileRouter;

@@ -106,7 +106,7 @@ studentRouter.post("/updateStudent", userAuth,
 studentRouter.delete("/deleteStudent/:rollNum", userAuth,
     async (req, res) => {
         try {
-            const { rollNum } = req.params;
+            const rollNum = decodeURIComponent(req.params.rollNum);
 
             const student = await Student.findOneAndDelete({ rollNum });
 

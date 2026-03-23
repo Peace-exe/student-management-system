@@ -1,6 +1,6 @@
-// store/useAuthStore.ts
 import { create } from 'zustand';
-import {devtools} from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
+
 interface User {
   _id: string;
   firstName: string;
@@ -22,12 +22,15 @@ interface AuthStore {
 
 const useAuthStore = create<AuthStore>()(
   devtools(
-    (set) => ({
-      user: null,
-      setUser: (user) => set({ user }, false, 'setUser'),
-      clearUser: () => set({ user: null }, false, 'clearUser'),
-    }),
-    { name: 'AuthStore' } // name shown in devtools
+    persist(
+      (set) => ({
+        user: null,
+        setUser: (user) => set({ user }, false, 'setUser'),
+        clearUser: () => set({ user: null }, false, 'clearUser'),
+      }),
+      { name: 'auth-store' }
+    ),
+    { name: 'AuthStore' }
   )
 );
 
