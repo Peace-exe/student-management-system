@@ -8,21 +8,22 @@ import StudentRecords from "./pages/StudentRecords";
 import Account from "./pages/Account";
 import DashboardLayout from "./components/DashboardLayout";
 import NotFound from "./pages/NotFound";
+import useAuthStore from "./store/useAuthStore";
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const user = useAuthStore((state) => state.user);
 
-  if (!isAuthenticated) {
-    return <Login onLogin={() => setIsAuthenticated(true)} />;
-  }
+if (!user) {
+  return <Login />;
+}
 
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <BrowserRouter>
-          <DashboardLayout onLogout={() => setIsAuthenticated(false)}>
+          <DashboardLayout>
             <Routes>
               <Route path="/" element={<Overview />} />
               <Route path="/students" element={<StudentRecords />} />

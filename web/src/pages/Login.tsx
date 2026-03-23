@@ -1,23 +1,38 @@
 import { useState } from "react";
 import { GraduationCap } from "lucide-react";
+import axios from "axios";
+import useAuthStore from "../store/useAuthStore";
 
-interface LoginProps {
-  onLogin: () => void;
-}
 
-const Login = ({ onLogin }: LoginProps) => {
+
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const setUser = useAuthStore((state) => state.setUser);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
       setError("Please fill in all fields.");
       return;
     }
-    // Demo login — accepts any credentials
-    onLogin();
+
+    try {
+      setLoading(true);
+      setError("");
+
+      const res = await axios.post("http://localhost:7001/login", { email, password });
+
+      setUser(res.data.data); 
+      {/**onLogin();/** */}
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Login failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -71,9 +86,10 @@ const Login = ({ onLogin }: LoginProps) => {
           </div>
           <button
             type="submit"
-            className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm transition-all hover:opacity-90"
+            disabled={loading}
+            className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-sm transition-all hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Sign in
+            {loading ? "Signing in..." : "Sign in"}
           </button>
         </form>
 

@@ -1,5 +1,6 @@
 const express = require("express");
 const profileRouter = express.Router();
+const {userAuth} = require('../middlewares/auth');
 
 profileRouter.post("/profile/update", userAuth,
     async (req, res) => {
