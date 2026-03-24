@@ -85,6 +85,15 @@ npm start
 
 Server will run at `http://localhost:7001`
 
+> ⚠️ **Important — MongoDB IP Whitelist**
+> This project uses MongoDB Atlas which restricts connections by IP address. Before the server can connect to the database, your local IP must be whitelisted.
+>
+> **Contact the repository owner** [@Peace-exe](https://github.com/Peace-exe) with your IP address to get access.
+>
+> Run this command in terminal to get your local IP Address: **curl -4 ifconfig.me**.
+>
+> Without this step, the server will start but all API calls will fail with a database connection error.
+
 ---
 
 ### 3. Set up the Frontend
