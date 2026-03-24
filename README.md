@@ -90,7 +90,7 @@ Server will run at `http://localhost:7001`
 >
 > **Contact the repository owner** [@Peace-exe](https://github.com/Peace-exe) with your IP address to get access.
 >
-> Run this command in terminal to get your local IP Address: **<u>curl -4 ifconfig.me</u>**.
+> Run this command in terminal to get your local IP Address: <u>**curl -4 ifconfig.me**</u>.
 >
 > Without this step, the server will start but all API calls will fail with a database connection error.
 
